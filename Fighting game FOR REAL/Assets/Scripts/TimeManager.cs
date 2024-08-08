@@ -5,8 +5,10 @@ using TMPro;
 
 public class TimeManager : MonoBehaviour
 {
+    
     public TextMeshProUGUI SurvivalTimer; 
     public float timeSurvived;
+    public float timeSurvivedMinute;
     public bool TimeCounting = false;
     // Start is called before the first frame update
     void Start()
@@ -19,8 +21,13 @@ public class TimeManager : MonoBehaviour
     {
         if (TimeCounting == true)
         {
-            timeSurvived = TimeSurvived + Time.deltaTime; 
-            SurvivalTimer.text = timeSurvived;
+            timeSurvived = timeSurvived + Time.deltaTime; 
+            if (timeSurvived>60f)
+            {
+                timeSurvived=0f;
+                timeSurvivedMinute++;
+            }
+            SurvivalTimer.text = "Time: " + timeSurvivedMinute + ":" Mathf.Round(timeSurvived);
         }
     }
 }
