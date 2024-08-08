@@ -22,12 +22,12 @@ public class TimeManager : MonoBehaviour
         if (TimeCounting == true)
         {
             timeSurvived = timeSurvived + Time.deltaTime; 
-            if (timeSurvived>60f)
+            if (timeSurvived>=10f)
             {
                 timeSurvived=0f;
                 timeSurvivedMinute++;
             }
-            SurvivalTimer.text = "Time: " + timeSurvivedMinute + ":" Mathf.Round(timeSurvived);
+            SurvivalTimer.text = "Time: " + timeSurvivedMinute + ":" + Mathf.Round(timeSurvived);
         }
     }
 }

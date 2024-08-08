@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SurvivalTimer: {fileID: 1904184555}
   timeSurvived: 0
+  timeSurvivedMinute: 0
   TimeCounting: 1
 --- !u!4 &672308619
 Transform:
@@ -291,14 +292,14 @@ RectTransform:
   m_GameObject: {fileID: 935674138}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2040498478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 825.7778, y: 505.77783}
+  m_AnchoredPosition: {x: 117.53076, y: 28.641998}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &935674140
@@ -1014,6 +1015,7 @@ RectTransform:
   m_Children:
   - {fileID: 1904184554}
   - {fileID: 1932543008}
+  - {fileID: 935674139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1032,4 +1034,3 @@ SceneRoots:
   - {fileID: 2040498478}
   - {fileID: 1252143599}
   - {fileID: 672308619}
-  - {fileID: 935674139}
