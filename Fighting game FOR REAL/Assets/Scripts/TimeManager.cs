@@ -21,13 +21,10 @@ public class TimeManager : MonoBehaviour
     {
         if (TimeCounting == true)
         {
-            timeSurvived = timeSurvived + Time.deltaTime; 
-            if (timeSurvived>=10f)
-            {
-                timeSurvived=0f;
-                timeSurvivedMinute++;
-            }
-            SurvivalTimer.text = "Time: " + timeSurvivedMinute + ":" + Mathf.Round(timeSurvived);
+            timeSurvived += Time.deltaTime; 
+            int minutes = Mathf.FloorToInt(timeSurvived / 60);
+            int seconds = Mathf.FloorToInt(timeSurvived % 60);
+            SurvivalTimer.text = string.Format("TIME: {0}:{1:00}", minutes, seconds);
         }
     }
 }
