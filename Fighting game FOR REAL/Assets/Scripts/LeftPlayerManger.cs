@@ -46,6 +46,15 @@ public class LeftPlayerManager : MonoBehaviour
         Vector3 movement = new Vector3(0, 0, moveX) * speed * Time.deltaTime;
         transform.Translate(movement);
 
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0); // Face left
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0); // Face right
+        }
+
         // Check for actions
         if (Input.GetKeyDown(KeyCode.Space))
         {
