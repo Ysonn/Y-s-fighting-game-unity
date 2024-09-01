@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LeftPlayerManager : MonoBehaviour
@@ -17,7 +16,10 @@ public class LeftPlayerManager : MonoBehaviour
     public float speed = 2f;
     private Coroutine toggleCoroutine;
 
-    private enum PlayerState
+    private bool isOnCooldown = false;
+    public float cooldownDuration = 0.01f;
+
+    public enum PlayerState
     {
         Idling,
         Walking,
@@ -26,37 +28,40 @@ public class LeftPlayerManager : MonoBehaviour
         Kicking
     }
 
-    private PlayerState currentState;
+    public PlayerState currentState;
 
     void Start()
     {
-        // Initialize the state
+        HideAllObjects();
+        ShowIdlingObjects();
         currentState = PlayerState.Idling;
-        // Set initial visibility
         SetInitialState();
     }
 
     void Update()
     {
+        if (isOnCooldown) return; // Prevent input handling if in cooldown
+
         float moveX = Input.GetAxis("Horizontal");
         Vector3 movement = new Vector3(0, 0, moveX) * speed * Time.deltaTime;
         transform.Translate(movement);
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            ChangeState(PlayerState.Walking);
-        }
-        else if (Input.GetKey(KeyCode.Space)) // Example for punching
+        // Check for actions
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             ChangeState(PlayerState.Punching);
         }
-        else if (Input.GetKey(KeyCode.LeftShift)) // Example for blocking
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             ChangeState(PlayerState.Blocking);
         }
-        else if (Input.GetKey(KeyCode.E)) // Example for kicking
+        else if (Input.GetKeyDown(KeyCode.E))
         {
             ChangeState(PlayerState.Kicking);
+        }
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            ChangeState(PlayerState.Walking);
         }
         else
         {
@@ -66,7 +71,7 @@ public class LeftPlayerManager : MonoBehaviour
 
     private void ChangeState(PlayerState newState)
     {
-        if (currentState == newState) return; // No change needed if already in the desired state
+        if (currentState == newState) return;
 
         // Stop the current coroutine if any
         if (toggleCoroutine != null)
@@ -79,6 +84,8 @@ public class LeftPlayerManager : MonoBehaviour
         currentState = newState;
 
         // Handle game object visibility and coroutines based on the new state
+        HideAllObjects(); // Hide all objects before showing new ones
+
         switch (newState)
         {
             case PlayerState.Walking:
@@ -90,25 +97,23 @@ public class LeftPlayerManager : MonoBehaviour
                 toggleCoroutine = StartCoroutine(ToggleIdleAnim());
                 break;
             case PlayerState.Punching:
-                HideAllObjects();
-                StartCoroutine(PerformPunch());
+                punch.SetActive(true);
+                StartCoroutine(PerformActionWithCooldown(PlayerState.Punching));
                 break;
             case PlayerState.Blocking:
-                HideAllObjects();
-                StartCoroutine(PerformBlock());
+                block.SetActive(true);
+                StartCoroutine(PerformActionWithCooldown(PlayerState.Blocking));
                 break;
             case PlayerState.Kicking:
-                HideAllObjects();
-                StartCoroutine(PerformKick());
+                kick.SetActive(true);
+                StartCoroutine(PerformActionWithCooldown(PlayerState.Kicking));
                 break;
         }
     }
 
     private void SetInitialState()
     {
-        // Start with idling state and hide walk game objects
         ShowIdlingObjects();
-        HideWalkingObjects();
     }
 
     private void ShowWalkingObjects()
@@ -170,27 +175,50 @@ public class LeftPlayerManager : MonoBehaviour
         }
     }
 
-    IEnumerator PerformPunch()
+    IEnumerator PerformActionWithCooldown(PlayerState actionState)
     {
-        punch.SetActive(true);
-        yield return new WaitForSeconds(0.5f); // Assume punch animation duration is 0.5 seconds
-        punch.SetActive(false);
-        ChangeState(PlayerState.Idling); // Return to idle state after punch
+        // Disable movement
+        isOnCooldown = true;
+
+        // Perform action
+        yield return new WaitForSeconds(GetActionDuration(actionState));
+        // Optionally, hide the action object if needed here
+        // punch.SetActive(false); // This is not needed since it stays visible during cooldown
+
+        // Handle cooldown
+        yield return Cooldown();
+
+        // Return to idle state or walking state based on movement
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            ChangeState(PlayerState.Walking);
+        }
+        else
+        {
+            ChangeState(PlayerState.Idling);
+        }
+
+        // Re-enable movement
+        isOnCooldown = false;
     }
 
-    IEnumerator PerformBlock()
+    private float GetActionDuration(PlayerState actionState)
     {
-        block.SetActive(true);
-        yield return new WaitForSeconds(1f); // Assume block duration is 1 second
-        block.SetActive(false);
-        ChangeState(PlayerState.Idling); // Return to idle state after blocking
+        switch (actionState)
+        {
+            case PlayerState.Punching:
+                return 0.01f;
+            case PlayerState.Blocking:
+                return 0.2f;
+            case PlayerState.Kicking:
+                return 0.01f;
+            default:
+                return 0f;
+        }
     }
 
-    IEnumerator PerformKick()
+    IEnumerator Cooldown()
     {
-        kick.SetActive(true);
-        yield return new WaitForSeconds(0.7f); // Assume kick animation duration is 0.7 seconds
-        kick.SetActive(false);
-        ChangeState(PlayerState.Idling); // Return to idle state after kick
+        yield return new WaitForSeconds(cooldownDuration);
     }
 }
