@@ -17,7 +17,6 @@ public class LeftPlayerManager : MonoBehaviour
     public float speed = 2f;
     private Coroutine toggleCoroutine;
 
-    
     private enum PlayerState
     {
         Idling,
@@ -27,22 +26,14 @@ public class LeftPlayerManager : MonoBehaviour
         Kicking
     }
 
-    
-    private List<PlayerState> playerStates;
     private PlayerState currentState;
 
     void Start()
     {
-        
-        playerStates = new List<PlayerState>
-        {
-            PlayerState.Idling,
-            PlayerState.Walking,
-            PlayerState.Punching,
-            PlayerState.Blocking,
-            PlayerState.Kicking
-        };
-        currentState = PlayerState.Idling; 
+        // Initialize the state
+        currentState = PlayerState.Idling;
+        // Set initial visibility
+        SetInitialState();
     }
 
     void Update()
@@ -55,15 +46,15 @@ public class LeftPlayerManager : MonoBehaviour
         {
             ChangeState(PlayerState.Walking);
         }
-        else if (Input.GetKey(KeyCode.Space)) 
+        else if (Input.GetKey(KeyCode.Space)) // Example for punching
         {
             ChangeState(PlayerState.Punching);
         }
-        else if (Input.GetKey(KeyCode.LeftShift)) 
+        else if (Input.GetKey(KeyCode.LeftShift)) // Example for blocking
         {
             ChangeState(PlayerState.Blocking);
         }
-        else if (Input.GetKey(KeyCode.E)) 
+        else if (Input.GetKey(KeyCode.E)) // Example for kicking
         {
             ChangeState(PlayerState.Kicking);
         }
@@ -75,7 +66,7 @@ public class LeftPlayerManager : MonoBehaviour
 
     private void ChangeState(PlayerState newState)
     {
-        if (currentState == newState) return; 
+        if (currentState == newState) return; // No change needed if already in the desired state
 
         // Stop the current coroutine if any
         if (toggleCoroutine != null)
@@ -84,36 +75,82 @@ public class LeftPlayerManager : MonoBehaviour
             toggleCoroutine = null;
         }
 
+        // Update the current state
         currentState = newState;
 
-        // Start a new coroutine based on the new state
+        // Handle game object visibility and coroutines based on the new state
         switch (newState)
         {
             case PlayerState.Walking:
+                ShowWalkingObjects();
                 toggleCoroutine = StartCoroutine(ToggleWalkAnim());
                 break;
             case PlayerState.Idling:
+                ShowIdlingObjects();
                 toggleCoroutine = StartCoroutine(ToggleIdleAnim());
                 break;
             case PlayerState.Punching:
+                HideAllObjects();
                 StartCoroutine(PerformPunch());
                 break;
             case PlayerState.Blocking:
+                HideAllObjects();
                 StartCoroutine(PerformBlock());
                 break;
             case PlayerState.Kicking:
+                HideAllObjects();
                 StartCoroutine(PerformKick());
                 break;
         }
     }
 
+    private void SetInitialState()
+    {
+        // Start with idling state and hide walk game objects
+        ShowIdlingObjects();
+        HideWalkingObjects();
+    }
+
+    private void ShowWalkingObjects()
+    {
+        walk1.SetActive(true);
+        walk2.SetActive(true);
+        idle1.SetActive(false);
+        idle2.SetActive(false);
+    }
+
+    private void HideWalkingObjects()
+    {
+        walk1.SetActive(false);
+        walk2.SetActive(false);
+    }
+
+    private void ShowIdlingObjects()
+    {
+        idle1.SetActive(true);
+        idle2.SetActive(true);
+        walk1.SetActive(false);
+        walk2.SetActive(false);
+    }
+
+    private void HideAllObjects()
+    {
+        walk1.SetActive(false);
+        walk2.SetActive(false);
+        idle1.SetActive(false);
+        idle2.SetActive(false);
+        punch.SetActive(false);
+        block.SetActive(false);
+        kick.SetActive(false);
+    }
+
     IEnumerator ToggleWalkAnim()
     {
-        while (true)
+        while (currentState == PlayerState.Walking)
         {
             walk1.SetActive(isWalk1Active);
             walk2.SetActive(!isWalk1Active);
-            
+
             isWalk1Active = !isWalk1Active;
 
             yield return new WaitForSeconds(0.5f);
@@ -122,7 +159,7 @@ public class LeftPlayerManager : MonoBehaviour
 
     IEnumerator ToggleIdleAnim()
     {
-        while (true)
+        while (currentState == PlayerState.Idling)
         {
             idle1.SetActive(isIdle1Active);
             idle2.SetActive(!isIdle1Active);
