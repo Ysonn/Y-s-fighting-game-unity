@@ -1,54 +1,9 @@
 fileFormatVersion: 2
-guid: 163a01acf80de465bb7d9782a07d077d
+guid: ba330ae0703fe470b9615b602b1aa367
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Dark_green_seamless_vegetation_leaves_foliage_dense_bush_shrub_texture
-    second: {fileID: 2800000, guid: 4bdf8b5504c264743b81a1886fd34ab1, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Hedge 00 seamless
-    second: {fileID: 2800000, guid: 6ed2d1ae1308345f9bb298bc415415cb, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: LeafTexture
-    second: {fileID: 2800000, guid: 31c6f46bb728949ecaa3ed038343dd06, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: WoodFlooringAshSuperWhite001_COL_1K
-    second: {fileID: 2800000, guid: fc9f6cec699734fa9b126ff61ed07b45, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: bark_willow_02_diff_1k
-    second: {fileID: 2800000, guid: 7032bef6bdc10450e86873dc14c515d3, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: bark_willow_02_nor_gl_1k
-    second: {fileID: 2800000, guid: fafd53f49cfe245e6a5a956b21efc415, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: bark_willow_02_rough_1k
-    second: {fileID: 2800000, guid: 32b18376e2d564723965253c7e415590, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: d7aopi7-df760885-8389-49a9-872d-425fee355b4f
-    second: {fileID: 2800000, guid: 85622ab03daeb4be9b8aeb88620a9db3, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: istockphoto-922759926-612x612
-    second: {fileID: 2800000, guid: e9480edbea55f4c10b2750834c512c7c, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
