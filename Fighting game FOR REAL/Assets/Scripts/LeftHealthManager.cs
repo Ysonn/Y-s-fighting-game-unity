@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeftMovementManager : MonoBehaviour
+public class LeftHealthManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public int leftHealth; 
     void Start()
     {
-        
+        leftHealth = 100; 
     }
 
     // Update is called once per frame
@@ -15,8 +15,4 @@ public class LeftMovementManager : MonoBehaviour
     {
         
     }
-
-    
 }
-
-
