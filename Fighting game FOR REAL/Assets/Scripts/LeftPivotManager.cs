@@ -38,9 +38,9 @@ public class LeftPivotManager : MonoBehaviour
 
         int enemiesAttackingLeft = EnemyMoveManager.amountAttackingLeft;
 
-        leftPlayerHealth -= (int)(enemiesAttackingLeft * Time.deltaTime * 10);
+        leftPlayerHealth -= (int)(enemiesAttackingLeft * Time.deltaTime);
     
-        healthText.text = Mathf.Clamp(leftPlayerHealth, 0, 100).ToString();
+        healthText.text = Mathf.Clamp(leftPlayerHealth, 0,1000).ToString();
         Debug.Log("Enemies attacking left: " + enemiesAttackingLeft);
         Debug.Log("Current Health After: " + leftPlayerHealth);
     }
