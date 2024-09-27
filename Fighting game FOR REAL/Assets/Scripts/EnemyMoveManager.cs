@@ -18,7 +18,12 @@ public class EnemyMoveManager : MonoBehaviour
     public GameObject punch;
     public GameObject kick;
 
+    public static int amountAttackingLeft = 0;
+    public static int amountAttackingRight = 0;
+
     public EnemyState currentState;
+
+    public static Transform attackingPlayer = null;
 
     public enum EnemyState
     {
@@ -44,7 +49,13 @@ public class EnemyMoveManager : MonoBehaviour
             else if (currentState != EnemyState.Attacking)
             {
                 // Start attacking if in range and not already attacking
-                AttackPlayer();
+                AttackPlayer(closestPlayer);
+            }
+            else if (attackingPlayer != closestPlayer)
+            {
+                //reset if someone is closer
+                StopAttacking();
+                MoveTowardsPlayer(closestPlayer);
             }
         }
     }
@@ -108,10 +119,23 @@ public class EnemyMoveManager : MonoBehaviour
         toggleCoroutine = null;
     }
 
-    void AttackPlayer()
+    void AttackPlayer(Transform closestPlayer)
     {
         // Switch to Attacking state
         currentState = EnemyState.Attacking;
+
+        // Set the attacking player to the closest player
+        attackingPlayer = closestPlayer;
+
+        // Increment the corresponding attacking counter
+        if (attackingPlayer == leftPlayer)
+        {
+            amountAttackingLeft++;
+        }
+        else if (attackingPlayer == rightPlayer)
+        {
+            amountAttackingRight++;
+        }
 
         // Stop the walking animation coroutine
         if (toggleCoroutine != null)
@@ -131,7 +155,8 @@ public class EnemyMoveManager : MonoBehaviour
         }
 
         // Attack logic here
-        Debug.Log("Attacking the player!");
+        
+        Debug.Log("Currently attacking: " + attackingPlayer.name);
     }
 
     IEnumerator ToggleAttackAnim()
@@ -164,5 +189,18 @@ public class EnemyMoveManager : MonoBehaviour
             punch.SetActive(false);
             kick.SetActive(false);
         }
+
+        if (attackingPlayer == leftPlayer)
+        {
+            amountAttackingLeft--;
+        }
+        else if (attackingPlayer == rightPlayer)
+        {
+            amountAttackingRight--;
+        }
+
+
+        // Reset the attacking player
+        attackingPlayer = null;
     }
 }
