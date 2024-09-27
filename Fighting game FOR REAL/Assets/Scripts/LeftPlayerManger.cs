@@ -17,7 +17,13 @@ public class LeftPlayerManager : MonoBehaviour
     private Coroutine toggleCoroutine;
 
     private bool isOnCooldown = false;
-    public float cooldownDuration = 0.01f;
+    public float cooldownDuration = 0.1f;
+
+    public Transform pivotPoint;
+
+    public PlayerState currentState;
+
+    public bool isWalkingg = false;
 
     public enum PlayerState
     {
@@ -28,10 +34,11 @@ public class LeftPlayerManager : MonoBehaviour
         Kicking
     }
 
-    public PlayerState currentState;
+    
 
     void Start()
     {
+        //set up inital appearance 
         HideAllObjects();
         ShowIdlingObjects();
         currentState = PlayerState.Idling;
@@ -40,22 +47,13 @@ public class LeftPlayerManager : MonoBehaviour
 
     void Update()
     {
-        if (isOnCooldown) return; // Prevent input handling if in cooldown
+        if (isOnCooldown) return; // can't engage new attack while cooldown active 
 
-        float moveX = Input.GetAxis("Horizontal");
-        Vector3 movement = new Vector3(0, 0, moveX) * speed * Time.deltaTime;
-        transform.Translate(movement);
+        //float moveX = Input.GetAxis("Horizontal");
+        //Vector3 movement = new Vector3(0, 0, moveX) * speed * Time.deltaTime;
+        //transform.Translate(movement);
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0); // Face left
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0); // Face right
-        }
-
-        // Check for actions
+        // Check for attacks n blocks 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ChangeState(PlayerState.Punching);
@@ -76,6 +74,9 @@ public class LeftPlayerManager : MonoBehaviour
         {
             ChangeState(PlayerState.Idling);
         }
+            
+        
+
     }
 
     private void ChangeState(PlayerState newState)
@@ -100,22 +101,27 @@ public class LeftPlayerManager : MonoBehaviour
             case PlayerState.Walking:
                 ShowWalkingObjects();
                 toggleCoroutine = StartCoroutine(ToggleWalkAnim());
+                isWalkingg = true;
                 break;
             case PlayerState.Idling:
                 ShowIdlingObjects();
                 toggleCoroutine = StartCoroutine(ToggleIdleAnim());
+                isWalkingg = false;
                 break;
             case PlayerState.Punching:
                 punch.SetActive(true);
                 StartCoroutine(PerformActionWithCooldown(PlayerState.Punching));
+                isWalkingg = false;
                 break;
             case PlayerState.Blocking:
                 block.SetActive(true);
                 StartCoroutine(PerformActionWithCooldown(PlayerState.Blocking));
+                isWalkingg = false;
                 break;
             case PlayerState.Kicking:
                 kick.SetActive(true);
                 StartCoroutine(PerformActionWithCooldown(PlayerState.Kicking));
+                isWalkingg = false;
                 break;
         }
     }
@@ -167,7 +173,7 @@ public class LeftPlayerManager : MonoBehaviour
 
             isWalk1Active = !isWalk1Active;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.4f);
         }
     }
 
@@ -191,10 +197,9 @@ public class LeftPlayerManager : MonoBehaviour
 
         // Perform action
         yield return new WaitForSeconds(GetActionDuration(actionState));
-        // Optionally, hide the action object if needed here
-        // punch.SetActive(false); // This is not needed since it stays visible during cooldown
 
-        // Handle cooldown
+
+        // enage that cooldown
         yield return Cooldown();
 
         // Return to idle state or walking state based on movement
@@ -207,7 +212,7 @@ public class LeftPlayerManager : MonoBehaviour
             ChangeState(PlayerState.Idling);
         }
 
-        // Re-enable movement
+        // stop da cooledown  
         isOnCooldown = false;
     }
 
@@ -220,7 +225,7 @@ public class LeftPlayerManager : MonoBehaviour
             case PlayerState.Blocking:
                 return 0.2f;
             case PlayerState.Kicking:
-                return 0.01f;
+                return 0.015f;
             default:
                 return 0f;
         }
