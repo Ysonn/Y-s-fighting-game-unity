@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LeftPivotManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class LeftPivotManager : MonoBehaviour
 
     public TextMeshProUGUI healthText;
 
+    public GameObject loseText;
+
     private Coroutine damageCoroutine;
 
     public int enemiesAttackingLeft;
@@ -22,6 +25,7 @@ public class LeftPivotManager : MonoBehaviour
     {
         // Initialize health text
         healthText.text = leftPlayerHealth.ToString();
+        loseText.SetActive(false);
     }
 
     void Update()
@@ -63,10 +67,12 @@ public class LeftPivotManager : MonoBehaviour
 
     IEnumerator ApplyDamageOverTime(int enemiesAttackingLeft)
     {
-        while (true)
+        
+        while (leftPlayerHealth > 0) // Continue while health is above 0
         {
             leftPlayerHealth -= enemiesAttackingLeft * 5;
-            Debug.Log("Damage applied. Health: " + leftPlayerHealth);
+            leftPlayerHealth = Mathf.Max(leftPlayerHealth, 0); // Clamp health to 0
+            Debug.Log(enemiesAttackingLeft);
             yield return new WaitForSeconds(1f);  // Apply damage every second
         }
     }
@@ -75,5 +81,20 @@ public class LeftPivotManager : MonoBehaviour
     {
         // Handle player death
         Debug.Log("Player died.");
+        // Pause the game
+        Time.timeScale = 0;
+
+        // Start the coroutine to wait and load the MainMenu scene
+        StartCoroutine(WaitAndLoadMainMenu());
+        
+    }
+    private IEnumerator WaitAndLoadMainMenu()
+    {
+        loseText.SetActive(true);
+        // Wait for 3 seconds
+        yield return new WaitForSecondsRealtime(3f); // Use WaitForSecondsRealtime to ignore time scale
+
+        // Load the MainMenu scene
+        SceneManager.LoadScene("MainMenu");
     }
 }

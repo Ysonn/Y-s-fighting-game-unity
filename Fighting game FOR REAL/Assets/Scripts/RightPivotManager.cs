@@ -63,10 +63,11 @@ public class RightPivotManager : MonoBehaviour
 
     IEnumerator ApplyDamageOverTime(int enemiesAttackingRight)
     {
-        while (true)
+        while (rightPlayerHealth > 0) // Continue while health is above 0
         {
             rightPlayerHealth -= enemiesAttackingRight * 5;
-            Debug.Log("Damage applied. Health: " + rightPlayerHealth);
+            rightPlayerHealth = Mathf.Max(rightPlayerHealth, 0); // Clamp health to 0
+            Debug.Log(enemiesAttackingRight);
             yield return new WaitForSeconds(1f);  // Apply damage every second
         }
     }
@@ -75,5 +76,6 @@ public class RightPivotManager : MonoBehaviour
     {
         // Handle player death
         Debug.Log("Player died.");
+        gameObject.SetActive(false);
     }
 }

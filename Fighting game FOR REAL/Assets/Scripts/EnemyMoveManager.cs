@@ -32,6 +32,17 @@ public class EnemyMoveManager : MonoBehaviour
         Attacking
     }
 
+    void Start()
+    {
+        leftPlayer = GameObject.Find("LeftPivotPointParent").transform;
+        rightPlayer = GameObject.Find("RightPivotPointParent").transform;
+
+        // Get the LeftPivotManager and RightPivotManager components from the GameObjects
+        leftPivotManager = leftPlayer.GetComponent<LeftPivotManager>();
+        rightPivotManager = rightPlayer.GetComponent<RightPivotManager>(); 
+
+    }
+
     void Update()
     {
         // Find the closest player
@@ -113,7 +124,8 @@ public class EnemyMoveManager : MonoBehaviour
 
             isWalk1Active = !isWalk1Active;
 
-            yield return new WaitForSeconds(0.4f);
+            float randomWalkDelay = Random.Range(0.25f, 0.6f);
+            yield return new WaitForSeconds(randomWalkDelay);
         }
 
         // Reset the coroutine reference when done
@@ -171,7 +183,8 @@ public class EnemyMoveManager : MonoBehaviour
 
             isPunchActive = !isPunchActive;
 
-            yield return new WaitForSeconds(0.3f);
+            float randomAttackDelay = Random.Range(0.25f, 0.6f);
+            yield return new WaitForSeconds(randomAttackDelay);
         }
 
         // Reset the coroutine reference when done
