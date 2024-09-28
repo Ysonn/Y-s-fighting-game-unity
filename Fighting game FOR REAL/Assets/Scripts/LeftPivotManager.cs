@@ -5,52 +5,73 @@ using TMPro;
 
 public class LeftPivotManager : MonoBehaviour
 {
-    public Vector3 playerPosition; 
+    public Vector3 playerPosition;
     private float speed = 0.004f;
 
     private int leftPlayerHealth = 100;
 
-    
-
     public bool isWalking = false;
 
     public TextMeshProUGUI healthText;
-    // Start is called before the first frame update
+
+    private Coroutine damageCoroutine;
+
     void Start()
     {
-        
+        // Initialize health text
+        healthText.text = leftPlayerHealth.ToString();
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKey(KeyCode.A) && (isWalking = true))
+        // Handle player movement
+        if (Input.GetKey(KeyCode.A))
         {
             transform.rotation = Quaternion.Euler(0, 0, 0); // Face left  
-            transform.Translate (speed,0,0);
+            transform.Translate(speed, 0, 0);
         }
-        else if (Input.GetKey(KeyCode.D) && (isWalking = true))
+        else if (Input.GetKey(KeyCode.D))
         {
             transform.rotation = Quaternion.Euler(0, -180, 0); // Face right 
-            transform.Translate (speed,0,0); 
+            transform.Translate(speed, 0, 0);
         }
 
+        // Start or stop the damage coroutine based on whether the enemies attacking
         int enemiesAttackingLeft = EnemyMoveManager.amountAttackingLeft;
 
-        leftPlayerHealth -= (int)(enemiesAttackingLeft * Time.deltaTime * 10) ;
-    
-        healthText.text = Mathf.Clamp(leftPlayerHealth, 0,1000).ToString();
-        Debug.Log("Enemies attacking left: " + enemiesAttackingLeft);
-        Debug.Log("Current Health After: " + leftPlayerHealth);
+        if (enemiesAttackingLeft > 0 && damageCoroutine == null)
+        {
+            damageCoroutine = StartCoroutine(ApplyDamageOverTime(enemiesAttackingLeft));
+        }
+        else if (enemiesAttackingLeft == 0 && damageCoroutine != null)
+        {
+            StopCoroutine(damageCoroutine);
+            damageCoroutine = null;
+        }
+
+        // Update health text
+        healthText.text = leftPlayerHealth.ToString();
+
+        // Handle player death
+        if (leftPlayerHealth <= 0)
+        {
+            Die();
+        }
     }
 
-    
+    IEnumerator ApplyDamageOverTime(int enemiesAttackingLeft)
+    {
+        while (true)
+        {
+            leftPlayerHealth -= enemiesAttackingLeft * 5;
+            Debug.Log("Damage applied. Health: " + leftPlayerHealth);
+            yield return new WaitForSeconds(1f);  // Apply damage every second
+        }
+    }
 
     void Die()
     {
         // Handle player death
         Debug.Log("Player died.");
     }
-        
 }
