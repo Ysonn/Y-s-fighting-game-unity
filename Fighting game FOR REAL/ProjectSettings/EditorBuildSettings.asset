@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LeftCharacterSelect.unity
     guid: cc0060f08a3e14a3990b41cbd1c06c13
+  - enabled: 1
+    path: Assets/Scenes/RightCharacterSelect.unity
+    guid: 0a66100196fcf45c195ef689383129df
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

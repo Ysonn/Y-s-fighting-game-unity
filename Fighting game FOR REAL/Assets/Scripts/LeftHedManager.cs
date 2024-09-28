@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class LeftHedManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject head1;  
+    public GameObject head2;  
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Check the value of the static selectedCharacter variable from da other script 
+        if (LeftSelectManager.selectedCharacter == 1)
+        {
+            head1.SetActive(true);
+            head2.SetActive(false);
+        }
+        else if (LeftSelectManager.selectedCharacter == 2)
+        {
+            head1.SetActive(false);
+            head2.SetActive(true);
+        }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement; 
 
-public class LeftSelectManager : MonoBehaviour
+public class RightSelectManager : MonoBehaviour
 {
     // Static variable to store the selected character
     public static int selectedCharacter = 0;
@@ -59,6 +59,6 @@ public class LeftSelectManager : MonoBehaviour
     IEnumerator LoadNextSceneAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene("RightCharacterSelect");
+        SceneManager.LoadScene("SampleScene");
     }
 }

@@ -1162,8 +1162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character1Button: {fileID: 59584995}
-  character2Button: {fileID: 1279652579}
-  character3Button: {fileID: 956035160}
+  character2Button: {fileID: 956035160}
+  character3Button: {fileID: 1279652579}
   confirmButton: {fileID: 768199916}
 --- !u!1 &768199914
 GameObject:
