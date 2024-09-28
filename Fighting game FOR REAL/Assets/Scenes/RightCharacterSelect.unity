@@ -1025,9 +1025,8 @@ GameObject:
   - component: {fileID: 759339264}
   - component: {fileID: 759339266}
   - component: {fileID: 759339265}
-  - component: {fileID: 759339267}
   m_Layer: 5
-  m_Name: Player1
+  m_Name: Player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1072,7 +1071,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'PLAYER 1 '
+  m_text: PLAYER 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -1149,22 +1148,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759339263}
   m_CullTransparentMesh: 1
---- !u!114 &759339267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759339263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c968817fd1e144323bbee695d488ea1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character1Button: {fileID: 59584995}
-  character2Button: {fileID: 1279652579}
-  character3Button: {fileID: 956035160}
-  confirmButton: {fileID: 768199916}
 --- !u!1 &768199914
 GameObject:
   m_ObjectHideFlags: 0
