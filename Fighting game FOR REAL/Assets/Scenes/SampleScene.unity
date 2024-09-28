@@ -4280,7 +4280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftPlayer: {fileID: 1714715070}
-  rightPlayer: {fileID: 1867690557}
+  rightPlayer: {fileID: 1098441651}
   moveSpeed: 2
   attackRange: 0.7
   walk1: {fileID: 1956964040}
