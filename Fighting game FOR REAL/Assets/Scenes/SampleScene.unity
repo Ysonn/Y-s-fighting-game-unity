@@ -3834,6 +3834,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPosition: {x: 0, y: 0, z: 0}
+  isWalking: 0
+  healthText: {fileID: 935674140}
+  enemiesAttackingRight: 0
 --- !u!4 &1098441651
 Transform:
   m_ObjectHideFlags: 0
@@ -4287,6 +4290,8 @@ MonoBehaviour:
   walk2: {fileID: 1127518845}
   punch: {fileID: 1811628088}
   kick: {fileID: 220047037}
+  leftPivotManager: {fileID: 1714715071}
+  rightPivotManager: {fileID: 1098441650}
   currentState: 0
 --- !u!1 &1252143596
 GameObject:
@@ -5702,6 +5707,7 @@ MonoBehaviour:
   playerPosition: {x: 0, y: 0, z: 0}
   isWalking: 0
   healthText: {fileID: 1932543009}
+  enemiesAttackingLeft: 0
 --- !u!1001 &1770117843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5839,6 +5845,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPosition: {x: 0, y: 0, z: 0}
+  isWalking: 0
+  healthText: {fileID: 0}
+  enemiesAttackingRight: 0
 --- !u!1001 &1880135251
 PrefabInstance:
   m_ObjectHideFlags: 0

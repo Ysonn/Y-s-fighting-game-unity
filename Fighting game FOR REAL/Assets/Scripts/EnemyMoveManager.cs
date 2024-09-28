@@ -18,8 +18,9 @@ public class EnemyMoveManager : MonoBehaviour
     public GameObject punch;
     public GameObject kick;
 
-    public static int amountAttackingLeft = 0;
-    public static int amountAttackingRight = 0;
+    public LeftPivotManager leftPivotManager;
+    public RightPivotManager rightPivotManager;
+
 
     public EnemyState currentState;
 
@@ -130,11 +131,11 @@ public class EnemyMoveManager : MonoBehaviour
         // Increment the corresponding attacking counter
         if (attackingPlayer == leftPlayer)
         {
-            amountAttackingLeft++;
+            leftPivotManager.enemiesAttackingLeft += 1;
         }
         else if (attackingPlayer == rightPlayer)
         {
-            amountAttackingRight++;
+            rightPivotManager.enemiesAttackingRight += 1;
         }
 
         // Stop the walking animation coroutine
@@ -192,11 +193,11 @@ public class EnemyMoveManager : MonoBehaviour
 
         if (attackingPlayer == leftPlayer)
         {
-            amountAttackingLeft--;
+            leftPivotManager.enemiesAttackingLeft -= 1;
         }
         else if (attackingPlayer == rightPlayer)
         {
-            amountAttackingRight--;
+            rightPivotManager.enemiesAttackingRight -= 1;
         }
 
 

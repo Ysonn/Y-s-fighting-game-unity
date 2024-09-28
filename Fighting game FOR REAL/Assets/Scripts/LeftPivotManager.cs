@@ -16,6 +16,8 @@ public class LeftPivotManager : MonoBehaviour
 
     private Coroutine damageCoroutine;
 
+    public int enemiesAttackingLeft;
+
     void Start()
     {
         // Initialize health text
@@ -37,7 +39,7 @@ public class LeftPivotManager : MonoBehaviour
         }
 
         // Start or stop the damage coroutine based on whether the enemies attacking
-        int enemiesAttackingLeft = EnemyMoveManager.amountAttackingLeft;
+        
 
         if (enemiesAttackingLeft > 0 && damageCoroutine == null)
         {
