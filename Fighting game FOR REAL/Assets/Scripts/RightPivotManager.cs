@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class RightPivotManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class RightPivotManager : MonoBehaviour
 
     public TextMeshProUGUI healthText;
 
+    public GameObject loseText;
+
     public int enemiesAttackingRight;
 
     private Coroutine damageCoroutine;
@@ -22,6 +25,7 @@ public class RightPivotManager : MonoBehaviour
     {
         // Initialize health text
         healthText.text = rightPlayerHealth.ToString();
+        loseText.SetActive(false);
     }
 
     void Update()
@@ -76,6 +80,20 @@ public class RightPivotManager : MonoBehaviour
     {
         // Handle player death
         Debug.Log("Player died.");
-        gameObject.SetActive(false);
+        // Pause the game
+        Time.timeScale = 0;
+
+        // Start the coroutine to wait and load the MainMenu scene
+        StartCoroutine(WaitAndLoadMainMenu());
+        
+    }
+    private IEnumerator WaitAndLoadMainMenu()
+    {
+        loseText.SetActive(true);
+        // Wait for 3 seconds
+        yield return new WaitForSecondsRealtime(3f); // Use WaitForSecondsRealtime to ignore time scale
+
+        // Load the MainMenu scene
+        SceneManager.LoadScene("MainMenu");
     }
 }

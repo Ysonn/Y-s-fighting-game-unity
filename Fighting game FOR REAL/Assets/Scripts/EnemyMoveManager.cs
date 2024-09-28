@@ -1,16 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class EnemyMoveManager : MonoBehaviour
 {
     public Transform leftPlayer;      
     public Transform rightPlayer;      
-    public float moveSpeed = 2f;   
+    private float moveSpeed; 
     public float attackRange = 0.5f; // engagement distance 
     private bool isWalk1Active = false;
 
     private Coroutine toggleCoroutine;
     private Coroutine attackCoroutine;
+
+    private int health = 3;
 
     public GameObject walk1;
     public GameObject walk2;
@@ -20,7 +23,6 @@ public class EnemyMoveManager : MonoBehaviour
 
     public LeftPivotManager leftPivotManager;
     public RightPivotManager rightPivotManager;
-
 
     public EnemyState currentState;
 
@@ -41,6 +43,8 @@ public class EnemyMoveManager : MonoBehaviour
         leftPivotManager = leftPlayer.GetComponent<LeftPivotManager>();
         rightPivotManager = rightPlayer.GetComponent<RightPivotManager>(); 
 
+        // Set moveSpeed to a random value between 1.5 and 2.5
+        moveSpeed = Random.Range(1.5f, 2.5f);
     }
 
     void Update()
@@ -65,7 +69,7 @@ public class EnemyMoveManager : MonoBehaviour
             }
             else if (attackingPlayer != closestPlayer)
             {
-                //reset if someone is closer
+                // Reset if someone is closer
                 StopAttacking();
                 MoveTowardsPlayer(closestPlayer);
             }
@@ -213,8 +217,28 @@ public class EnemyMoveManager : MonoBehaviour
             rightPivotManager.enemiesAttackingRight -= 1;
         }
 
-
         // Reset the attacking player
         attackingPlayer = null;
+    }
+
+    // Handle collision with sphere collider
+    private void OnTriggerEnter(Collider other)
+{
+    Debug.Log("Collided with: " + other.gameObject.name); // Log the name of the colliding object
+    // Check if the collider is a sphere collider (e.g., a player's attack)
+    if (other.CompareTag("Attack"))
+    {
+        TakeDamage();
+    }
+}
+
+    void TakeDamage()
+    {
+        health--; // Reduce health by 1
+        Debug.Log("Current Health: " + health);
+        if (health <= 0)
+        {
+            Destroy(gameObject); // Destroy the enemy when health reaches 0
+        }
     }
 }
