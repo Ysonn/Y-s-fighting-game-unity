@@ -220,7 +220,7 @@ public class RightPlayerManager : MonoBehaviour
             case PlayerState.Blocking:
                 return 0.2f; 
             case PlayerState.Kicking:
-                return 0.015f;
+                return 0.03f;
             default:
                 return 0f;
         }

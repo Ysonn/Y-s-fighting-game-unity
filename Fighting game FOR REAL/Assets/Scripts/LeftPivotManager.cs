@@ -23,6 +23,15 @@ public class LeftPivotManager : MonoBehaviour
 
     void Start()
     {
+        if (LeftSelectManager.selectedCharacter == 1)
+        {
+            speed = 0.006f;
+        }
+
+        if (LeftSelectManager.selectedCharacter == 2)
+        {
+            leftPlayerHealth = 110;
+        }
         // Initialize health text
         healthText.text = leftPlayerHealth.ToString();
         loseText.SetActive(false);

@@ -26,6 +26,18 @@ public class RightPivotManager : MonoBehaviour
         // Initialize health text
         healthText.text = rightPlayerHealth.ToString();
         loseText.SetActive(false);
+
+        if (RightSelectManager.selectedCharacter == 1)
+        {
+            speed = 0.006f;
+        }
+
+        if (RightSelectManager.selectedCharacter == 2)
+        {
+            rightPlayerHealth = 110;
+        }
+        
+        
     }
 
     void Update()

@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab; // Assign your enemy prefab in the Inspector
     public float initialSpawnRate = 5f; // Initial spawn rate in seconds
     public float decreaseRate = 0.1f; // Rate to decrease spawn time (in seconds)
-    public float maxSpawnRate = 2f; // Maximum spawn rate (in seconds)
+    public float maxSpawnRate = 0.5f; // Maximum spawn rate (in seconds)
     public float timeToMaxRate = 60f; // Time to reach max spawn rate (in seconds)
 
     private float currentSpawnRate;
@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                currentSpawnRate = maxSpawnRate; // Maintain max spawn rate
+                currentSpawnRate = maxSpawnRate; // Maintaih max spawn rate
             }
         }
     }

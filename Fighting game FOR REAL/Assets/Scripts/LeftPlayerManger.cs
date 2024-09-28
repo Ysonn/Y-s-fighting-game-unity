@@ -63,6 +63,10 @@ public class LeftPlayerManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             ChangeState(PlayerState.Blocking);
+            if (currentState == PlayerState.Blocking)
+        {
+            leftPivotManager.enemiesAttackingLeft = 0;
+        }
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
@@ -200,10 +204,7 @@ public class LeftPlayerManager : MonoBehaviour
         // Perform action
         yield return new WaitForSeconds(GetActionDuration(actionState));
 
-        if (currentState == PlayerState.Blocking)
-        {
-            leftPivotManager.enemiesAttackingLeft = 0;
-        }
+        
 
         // enage that cooldown
         yield return Cooldown();
@@ -233,7 +234,7 @@ public class LeftPlayerManager : MonoBehaviour
             case PlayerState.Blocking:
                 return 0.2f;
             case PlayerState.Kicking:
-                return 0.015f;
+                return 0.03f;
             default:
                 return 0f;
         }
