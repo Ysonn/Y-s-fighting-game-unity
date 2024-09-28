@@ -238,7 +238,9 @@ public class EnemyMoveManager : MonoBehaviour
         Debug.Log("Current Health: " + health);
         if (health <= 0)
         {
+            StopAttacking();
             Destroy(gameObject); // Destroy the enemy when health reaches 0
+
         }
     }
 }
