@@ -25,6 +25,8 @@ public class LeftPlayerManager : MonoBehaviour
 
     public bool isWalkingg = false;
 
+    public LeftPivotManager leftPivotManager;
+
     public enum PlayerState
     {
         Idling,
@@ -198,9 +200,15 @@ public class LeftPlayerManager : MonoBehaviour
         // Perform action
         yield return new WaitForSeconds(GetActionDuration(actionState));
 
+        if (currentState == PlayerState.Blocking)
+        {
+            leftPivotManager.enemiesAttackingLeft = 0;
+        }
 
         // enage that cooldown
         yield return Cooldown();
+
+        
 
         // Return to idle state or walking state based on movement
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))

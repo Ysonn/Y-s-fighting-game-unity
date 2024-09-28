@@ -2847,6 +2847,7 @@ MonoBehaviour:
   pivotPoint: {fileID: 1714715070}
   currentState: 0
   isWalkingg: 0
+  leftPivotManager: {fileID: 1714715071}
 --- !u!1001 &820932756
 PrefabInstance:
   m_ObjectHideFlags: 0
